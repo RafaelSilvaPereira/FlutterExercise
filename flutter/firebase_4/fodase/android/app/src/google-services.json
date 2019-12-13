@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "83311583346",
+    "firebase_url": "https://satanas-1800d.firebaseio.com",
+    "project_id": "satanas-1800d",
+    "storage_bucket": "satanas-1800d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83311583346:android:d7fb4de9378b3516f862eb",
+        "android_client_info": {
+          "package_name": "pereira.rafael.fodase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "83311583346-0rnb9pq4dpedrdkij7edmt091i65vk70.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pereira.rafael.fodase",
+            "certificate_hash": "d8436fab9d2beab0b5815dd4146c083073279c69"
+          }
+        },
+        {
+          "client_id": "83311583346-8eektccig7tt6fphi4dgdh7tm6gfmpgo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3xXECHFnUFXciY5RLHUjzqFrLrdXh9cg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "83311583346-8eektccig7tt6fphi4dgdh7tm6gfmpgo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
