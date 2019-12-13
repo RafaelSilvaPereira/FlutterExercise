@@ -8,6 +8,7 @@ class CaraOuCoroa extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "Cara ou coroa",
       home: CaraOuCoroaHome(),
     );
@@ -20,13 +21,13 @@ class CaraOuCoroaHome extends StatefulWidget {
 }
 
 class _CaraOuCoroaHomeState extends State<CaraOuCoroaHome> {
-  AssetImage resultado = AssetImage("moeda_cara.png");
+  AssetImage resultado = AssetImage("assets/img/moeda_coroa.png");
 
   void getRandomImg() {
     if (Random().nextInt(2) == 0) {
-      this.resultado = AssetImage("moeda_cara.png");
+      this.resultado = AssetImage("assets/img/moeda_cara.png");
     } else {
-      this.resultado = AssetImage("moeda_coroa.png");
+      this.resultado = AssetImage("assets/img/moeda_coroa.png");
     }
   }
 
@@ -45,14 +46,12 @@ class _CaraOuCoroaHomeState extends State<CaraOuCoroaHome> {
           GestureDetector(
             child: Image.asset('assets/img/botao_jogar.png'),
             onTap: () {
-              print('ANTES ' + this.resultado.toString());
               this.getRandomImg();
-              print('DEPOIS ' + this.resultado.toString());
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: ((context) =>
-                      TelaSecundaria(this.resultado, this.getRandomImg)),
+                  builder: ((context) => TelaSecundaria(this.resultado)),
                 ),
               );
             },
@@ -66,30 +65,29 @@ class _CaraOuCoroaHomeState extends State<CaraOuCoroaHome> {
 class TelaSecundaria extends StatefulWidget {
   AssetImage mensagem;
 
-  void randomImg;
-
-  TelaSecundaria(AssetImage mensagem, randomImg) {
+  TelaSecundaria(AssetImage mensagem) {
     this.mensagem = mensagem;
-    // this.randomImg = randomImg;
   }
+
   @override
-  _TelaSecundariaState createState() => _TelaSecundariaState();
+  _TelaSecundariaState createState() => _TelaSecundariaState(this.mensagem);
 }
 
 class _TelaSecundariaState extends State<TelaSecundaria> {
-  AssetImage resultado;
+  AssetImage message;
+
   void getRandomImg() {
     if (Random().nextInt(2) == 0) {
-      this.resultado = AssetImage("moeda_cara.png");
+      this.message = AssetImage("assets/img/moeda_cara.png");
     } else {
-      this.resultado = AssetImage("moeda_coroa.png");
+      this.message = AssetImage("assets/img/moeda_coroa.png");
     }
   }
 
+  _TelaSecundariaState(this.message);
+
   @override
   Widget build(BuildContext context) {
-    this.resultado = ;
-    
     return Scaffold(
       backgroundColor: Color(0xff61bd86),
       body: Column(
@@ -99,12 +97,11 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
             padding: EdgeInsets.all(12),
             child: GestureDetector(
               child: Image(
-                image: resultado,
+                image: this.message,
               ),
               onTap: () {
                 setState(() {
-                  this.randomImg();
-                  this.resultado = widget.mensagem;
+                  this.getRandomImg();
                 });
               },
             ),
@@ -122,6 +119,4 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
       ),
     );
   }
-
-  AssetImage randomImg() {}
 }
