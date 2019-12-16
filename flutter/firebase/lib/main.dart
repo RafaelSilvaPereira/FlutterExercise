@@ -1,17 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firestore.instance
-      .collection("usuarios")
-      .document("pontuacao")
-      .setData({
-      "carlos": "80",
-      "silva": "220"
-    },
-  );
+
+  Firestore db = Firestore.instance;
+  // db.collection('usuarios').document('001').setData(
+  //   {
+  //     'nome': 'Rafael',
+  //     'sobrenome': 'Pereira',
+  //     'idade': 19,
+  //   },
+  // );
+  // DocumentReference ref = await db.collection('usuarios').add({
+  //   'nome': "Bia",
+  //   'Sobrenome': 'Alice',
+  //   'Idade': '666666',
+  // });
+
+  // db
+  //     .collection('usuarios')
+  //     .document('TasVebXb9WXzWe6X1fKg')
+  //     .setData({'Idade': '28'});
+
+  // print(ref.documentID);
+
+  // db.collection('usuarios').document('TasVebXb9WXzWe6X1fKg').delete();
+
+  // DocumentSnapshot oi =
+  //     await db.collection('usuarios').document('m5MNs2Xm9wxWTixBj2uG').get();
+  // print('dados: ' + oi.data.toString());
+
+  QuerySnapshot querySnapshot = await db.collection('usuarios').getDocuments();
+
+  print(querySnapshot.documents
+      .map((item) => ("usuario " + item.data.toString())));
 
   runApp(MyApp());
 }
