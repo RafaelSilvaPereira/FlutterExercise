@@ -1,80 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Firestore db = Firestore.instance; /** Firestore é um banco de dados não */
+  FirebaseAuth auth = FirebaseAuth.instance;
 
-  // /**
-  //  * Como fazer post e put de um dado no banco de dado. Quando passamos document('001') estamos informando o id desse objeto
-  //  */
-  db.collection('usuarios').document('001').setData(
-    {
-      'nome': 'Rafael',
-      'sobrenome': 'Pereira',
-      'idade': 19,
+  auth
+      .createUserWithEmailAndPassword(
+    email: "usuario_x@gmail.com",
+    password: "psw123456789",
+  )
+      .then(
+    // ocorre quando a criação ocorrer com sucesso
+    (user) {
+      print(user.email.toString()); //tratamento generico
+    },
+  ).catchError(
+    // em caso de falha
+    (erro) {
+      print(erro.toString()); // tratamento generico
     },
   );
 
-  // /**
-  //  * Como fazer um post de um dado no banco de dados. Diferente do metodo anterior ele não server para atualizar (put),
-  //  * isto por que  não é passado o 'id' do objeto, neste caso um novo objeto é inserido no bd com um id 'randomico'
-  //  */
-  DocumentReference ref = await db.collection('usuarios').add(
-    {
-      'nome': "Bia",
-      'Sobrenome': 'Alice',
-      'Idade': '666666',
-    },
-  );
+  auth.signOut();
 
-  // /**
-  //  * Como atualizar dados do bd
-  //  */
-  // db
-  //     .collection('usuarios')
-  //     .document(
-  //         'TasVebXb9WXzWe6X1fKg') /** no lugar dessa string deve ficar o id do objeto */
-  //     .setData({
-  //   'Idade': '28'
-  // });
-  /** O objeto será substituido... por este passado, para o caso de ser atualizado um unico campo... todo objeto deve ser passado, com apenas a modificação do objeto sendo informada */
-
-  // print(ref.documentID);
-
-  // /** como deletar o objeto */
-  // db.collection('usuarios').document('TasVebXb9WXzWe6X1fKg').delete();
-
-  DocumentSnapshot usuario =
-      await db.collection('usuarios').document('m5MNs2Xm9wxWTixBj2uG').get();
-  print('dados: ' + usuario.data.toString());
-
-  // /** capturando os todos os documentos  (objetos) da coleção de usuarios */
-
-  // print(querySnapshot.documents
-  //     .map((item) => ("usuario " + item.data.toString())));
-
-  // /** Captura constatemente o estado do banco de dados e na ocorrencia da mundaça do estado do bd excuta uma função */
-  db.collection('usuarios').snapshots().listen((snapshot) =>
-      print(snapshot.documents.map((item) => item.data.toString() + "\n")));
-
-  // /**
-  //  * fazendo consultas
-  //  *
-  // */
-  QuerySnapshot querySnapshot = await db
-      .collection('usuarios')
-      .where('nome', isEqualTo: 'Rafael') // que podem ter um filtro
-      .where('idade', isEqualTo: '19') // que podem ter mais de um filtro...
-      .orderBy('idade', descending: true) // que podem ser ordenadas
-      .orderBy('nome',
-          descending:
-              true) // que podem ter mais de uma ordenção (desde que se crie um index no bd)
-      .limit(50) // e que pode ter um numero maximo de resultados
-      .getDocuments();
-  print(querySnapshot.documents.map((item) => item.data.toString()));
-
+  auth.signInWithEmailAndPassword(email: "email_valido@gmail.com", password: "senha valida",);
   runApp(MyApp());
 }
 
